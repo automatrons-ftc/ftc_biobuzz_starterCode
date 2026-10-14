@@ -55,6 +55,8 @@ public class Drivetrain {
         telemetry.addData("Drive Mode", state);
         telemetry.addData("Speed", speed);
 
+        telemetry.addData("TESTTTTTTTTT", 0);
+
     }
 
     public void driveRobotCentric(double y, double x, double rz) {
