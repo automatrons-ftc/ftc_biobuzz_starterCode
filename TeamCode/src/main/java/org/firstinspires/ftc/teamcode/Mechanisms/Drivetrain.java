@@ -81,6 +81,7 @@ public class Drivetrain {
         telemetry.addData("Front left/Right", "%4.2f, %4.2f", frontLeftPower, frontRightPower);
         telemetry.addData("Back  left/Right", "%4.2f, %4.2f", backLeftPower, backRightPower);
         telemetry.addData("oookokokokikjok",0);
+        telemetry.addData("oookokokokikjok",0);
     }
 
 
