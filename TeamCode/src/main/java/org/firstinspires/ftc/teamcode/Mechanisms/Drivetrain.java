@@ -8,6 +8,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Drivetrain {
     private DcMotor frontLeftDrive, backLeftDrive, frontRightDrive, backRightDrive;
     private Telemetry telemetry;
+    private DcMotor [] motors;
 
     public enum State {
         ROBOT_CENTRIC,
@@ -21,15 +22,21 @@ public class Drivetrain {
     public Drivetrain(HardwareMap hm, Telemetry telemetry) {
         this.telemetry = telemetry;
 
-        frontLeftDrive = hm.get(DcMotor.class, "motorFL");
-        backLeftDrive = hm.get(DcMotor.class, "motorBL");
-        frontRightDrive = hm.get(DcMotor.class, "motorFR");
-        backRightDrive = hm.get(DcMotor.class, "motorBR");
+        motors = new DcMotor[4];
+        motors[0] = hm.get(DcMotor.class, "motorFL");
+        motors[1] = hm.get(DcMotor.class, "motorBL");
+        motors[2] = hm.get(DcMotor.class, "motorFR");
+        motors[3] = hm.get(DcMotor.class, "motorBR");
 
-        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
-        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        for (DcMotor motor : motors) { //περνάει κάθε motor στον πίνακα
+            motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE); //αλλαζει φλοατ μπρακε
+        }
+
+        motors[0].setDirection(DcMotor.Direction.REVERSE);
+        motors[1].setDirection(DcMotor.Direction.REVERSE);
+        motors[2].setDirection(DcMotor.Direction.FORWARD);
+        motors[3].setDirection(DcMotor.Direction.FORWARD);
     }
 
     public void update(double forward, double strafe, double rotate, double heading, boolean driveModeButton, double booster) {
@@ -42,7 +49,7 @@ public class Drivetrain {
 
         // scaling the speed of the robot: default is 50%
         // the other 50% is scaled according to the pressure on R2
-        double speed = 0.5 + (booster * 0.5);
+        double speed = 1 - (booster * 0.5);
         forward *= speed;
         strafe *= speed;
         rotate *= speed;
