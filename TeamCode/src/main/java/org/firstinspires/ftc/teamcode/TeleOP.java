@@ -61,7 +61,7 @@ public class TeleOP extends LinearOpMode {
             turret.update(gamepad1.a, gamepad1.b);
 
             autoShooter.update(gamepad1.left_bumper);
-            telemetry.addData("Test status", "Very True");
+            telemetry.addData("Test status", "Very Very True");
             telemetry.update();
         }
     }}
