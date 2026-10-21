@@ -28,7 +28,7 @@ public class Drivetrain {
         motors[2] = hm.get(DcMotor.class, "motorFR");
         motors[3] = hm.get(DcMotor.class, "motorBR");
 
-        for (DcMotor motor : motors) { //περνάει κάθε motor στον πίνακα
+        for (DcMotor motor : motors) { //περνάει κάθε motor apo ton πίνακα
             motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE); //αλλαζει φλοατ μπρακε
         }
@@ -61,8 +61,6 @@ public class Drivetrain {
         }
         telemetry.addData("Drive Mode", state);
         telemetry.addData("Speed", speed);
-
-        telemetry.addData("TESTTTTTTTTT", 0);
 
     }
 

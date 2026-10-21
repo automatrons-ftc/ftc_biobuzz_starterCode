@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Hood2;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.Mechanisms.RobotIMU;
+import org.firstinspires.ftc.teamcode.Mechanisms.Shooter;
 import org.firstinspires.ftc.teamcode.Mechanisms.Turret;
 
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -25,6 +26,7 @@ public class TeleOP extends LinearOpMode {
     private Beam beam;
     private Turret turret;
     private AutoShooter autoShooter;
+    private Shooter shooter;
 
     @Override
     public void runOpMode() {
@@ -39,7 +41,8 @@ public class TeleOP extends LinearOpMode {
         hood2 = new Hood2(hardwareMap, telemetry);
         turret = new Turret(hardwareMap, telemetry);
         autoShooter = new AutoShooter(hardwareMap, telemetry, intake, beam);
-
+        shooter = new Shooter();
+        shooter.init(hardwareMap);
         waitForStart();
 
         while (opModeIsActive()) {
@@ -47,11 +50,10 @@ public class TeleOP extends LinearOpMode {
             if (gamepad1.options) {
                 imu.resetYaw();
             }
-
             drivetrain.update(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x,
                               imu.getHeading(), gamepad1.y, gamepad1.right_trigger);
 
-//            hood.update(gamepad1.a);
+            //hood.update(gamepad1.a);
 
             // i know this is problematic but i don't have a second gamepad :(
             hood2.update(gamepad1.right_stick_y);
@@ -61,6 +63,8 @@ public class TeleOP extends LinearOpMode {
             turret.update(gamepad1.a, gamepad1.b);
 
             autoShooter.update(gamepad1.left_bumper);
+            shooter.update(gamepad1);
             telemetry.update();
         }
-    }}
+    }
+}
