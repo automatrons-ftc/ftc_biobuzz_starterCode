@@ -64,6 +64,8 @@ public class TeleOP extends LinearOpMode {
 
             autoShooter.update(gamepad1.left_bumper);
             shooter.update(gamepad1);
+            telemetry.addData("shooter power", shooter.getShooterPower());
+            telemetry.addData("shooter", shooter.isMotorOn());
             telemetry.update();
         }
     }
