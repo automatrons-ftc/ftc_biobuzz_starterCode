@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.Mechanisms.RobotIMU;
 import org.firstinspires.ftc.teamcode.Mechanisms.Shooter;
 import org.firstinspires.ftc.teamcode.Mechanisms.Turret;
+import org.firstinspires.ftc.teamcode.Mechanisms.TurretNew;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -24,7 +25,8 @@ public class TeleOP extends LinearOpMode {
     private RobotIMU imu;
     private Intake intake;
     private Beam beam;
-    private Turret turret;
+    //private Turret turret;
+    private TurretNew turretNew;
     private AutoShooter autoShooter;
     private Shooter shooter;
 
@@ -39,7 +41,8 @@ public class TeleOP extends LinearOpMode {
         beam = new Beam(hardwareMap, telemetry);
         intake = new Intake(hardwareMap, telemetry, beam);
         hood2 = new Hood2(hardwareMap, telemetry);
-        turret = new Turret(hardwareMap, telemetry);
+        //turret = new Turret(hardwareMap, telemetry);
+        turretNew = new TurretNew(hardwareMap, telemetry);
         autoShooter = new AutoShooter(hardwareMap, telemetry, intake, beam);
         shooter = new Shooter();
         shooter.init(hardwareMap);
@@ -60,8 +63,7 @@ public class TeleOP extends LinearOpMode {
 
             beam.update();
             intake.update(gamepad1.right_bumper);
-            turret.update(gamepad1.a, gamepad1.b);
-
+            //turret.update(gamepad1.a, gamepad1.b);
             autoShooter.update(gamepad1.left_bumper);
             shooter.update(gamepad1);
             telemetry.addData("shooter power", shooter.getShooterPower());
