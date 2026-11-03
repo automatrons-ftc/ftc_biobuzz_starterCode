@@ -11,6 +11,12 @@ import com.pedropathing.paths.Path;
 import com.pedropathing.ivy.Scheduler;
 import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
+import com.pedropathing.ivy.Command;
+import com.pedropathing.ivy.Scheduler;
+
+import static com.pedropathing.ivy.Scheduler.schedule;
+import static com.pedropathing.ivy.groups.Groups.sequential;
+import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 
 @Autonomous
 public class Auto1 extends OpMode {
@@ -27,6 +33,13 @@ public class Auto1 extends OpMode {
     private Path path2() {
         return curve(pose2, controlPose, pose3).linear(pose2, pose3);
     }
+    private Command autoRoutine() {
+        return sequential(
+                follow(follower, path1()),
+                // Mechanisms εδω μπενουν
+                follow(follower, path2())
+        );
+    }
 
 
 
@@ -35,18 +48,28 @@ public class Auto1 extends OpMode {
         Scheduler.reset();
         follower = Constants.create(hardwareMap);
         follower.setPose(startPose);
-
-
+        follower = Constants.create(hardwareMap);
+        follower.setPose(startPose);
+        follower.update();
     }
 
     @Override
     public void start() {
-        schedule(follow(follower, path1()));
+        //schedule(follow(follower, path1())); αυτο δεν χριαζετε γτ ειναι μεσα στ οροθτινε
+        schedule(autoRoutine());
 
     }
 
     @Override
     public void loop() {
+        follower.update();
+        Scheduler.execute();
 
+        telemetry.addData("X", follower.pose().x());
+        telemetry.addData("Y", follower.pose().y());
+        telemetry.addData("Heading", Math.toDegrees(follower.pose().heading()));
+        telemetry.addData("Follower Mode", follower.mode());
+        telemetry.update();
     }
+
 }
