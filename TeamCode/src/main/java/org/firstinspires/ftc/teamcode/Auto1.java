@@ -48,8 +48,6 @@ public class Auto1 extends OpMode {
         Scheduler.reset();
         follower = Constants.create(hardwareMap);
         follower.setPose(startPose);
-        follower = Constants.create(hardwareMap);
-        follower.setPose(startPose);
         follower.update();
     }
 
