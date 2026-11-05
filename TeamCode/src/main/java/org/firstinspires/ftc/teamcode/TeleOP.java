@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.RobotIMU;
 import org.firstinspires.ftc.teamcode.Mechanisms.Shooter;
 import org.firstinspires.ftc.teamcode.Mechanisms.Turret;
 import org.firstinspires.ftc.teamcode.Mechanisms.TurretNew;
+import org.firstinspires.ftc.teamcode.Tools.Pedro.Constants;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -29,6 +31,7 @@ public class TeleOP extends LinearOpMode {
     private TurretNew turretNew;
     private AutoShooter autoShooter;
     private Shooter shooter;
+    private Follower follower;
 
     @Override
     public void runOpMode() {
@@ -41,6 +44,7 @@ public class TeleOP extends LinearOpMode {
         beam = new Beam(hardwareMap, telemetry);
         intake = new Intake(hardwareMap, telemetry, beam);
         hood2 = new Hood2(hardwareMap, telemetry);
+        follower = Constants.create(hardwareMap);
         //turret = new Turret(hardwareMap, telemetry);
         turretNew = new TurretNew(hardwareMap, telemetry);
         autoShooter = new AutoShooter(hardwareMap, telemetry, intake, beam);
@@ -61,6 +65,21 @@ public class TeleOP extends LinearOpMode {
             // i know this is problematic but i don't have a second gamepad :(
             hood2.update(gamepad1.right_stick_y);
 
+
+            follower.update();
+
+            double basketX = 45;
+            double basketY = 45;
+
+            turretNew.update(
+                    follower.pose(),
+                    basketX,
+                    basketY,
+                    gamepad1.options,
+                    gamepad1.y
+            );
+
+
             beam.update();
             intake.update(gamepad1.right_bumper);
             //turret.update(gamepad1.a, gamepad1.b);
@@ -69,6 +88,7 @@ public class TeleOP extends LinearOpMode {
             telemetry.addData("shooter power", shooter.getShooterPower());
             telemetry.addData("shooter", shooter.isMotorOn());
             telemetry.update();
+
         }
     }
 }
