@@ -3,6 +3,9 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.pedropathing.follower.Follower;
+
+import org.firstinspires.ftc.teamcode.Mechanisms.AutoShooter;
+import org.firstinspires.ftc.teamcode.Mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.Tools.Pedro.Constants;
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.math.Pose;
@@ -21,7 +24,8 @@ import static com.pedropathing.ivy.commands.Commands.waitMs;
 
 @Autonomous
 public class AutoBB1 extends OpMode {
-
+    private Intake intake;
+    private AutoShooter autoShooter;
     private Follower follower;
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
